@@ -4,3 +4,10 @@ export function selectGeocodeResult(data) {
     payload: data
   }
 }
+
+export function updateTiming(data) {
+  return {
+    type: 'UPDATE_TIMING',
+    payload: data
+  }
+}

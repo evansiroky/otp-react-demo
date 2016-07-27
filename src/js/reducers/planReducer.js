@@ -12,6 +12,9 @@ export default function reducer(state=defaultPlan, action) {
     case 'UPDATE_TRIP_END':
       console.log('UPDATE_TRIP_END', state, action)
       break
+    case 'UPDATE_TIMING':
+      console.log('UPDATE_TIMING', state, action)
+      break
   }
   return state
 }

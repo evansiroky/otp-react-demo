@@ -3,7 +3,7 @@ import React from "react"
 import Autocomplete from 'react-autocomplete'
 import { connect } from "react-redux"
 
-import '../../css/AddressGeocoder.css'
+import '../../css/Geocoder.css'
 
 import { selectGeocodeResult } from '../actions/planActions'
 
@@ -53,7 +53,6 @@ export default class MapquestNominatimGeocoder extends React.Component {
   }
 
   handleSelect(value, item) {
-    console.log('handleSelect', value, item)
     this.setState({ value, results: [ item ] })
     this.props.dispatch(selectGeocodeResult({
       source: this.props.id,
@@ -63,10 +62,11 @@ export default class MapquestNominatimGeocoder extends React.Component {
 
   render() {
     return (
-      <div class="address-geocoder">
+      <div class="form-group address-geocoder">
         <label htmlFor={this.props.id}>{this.props.labelText}</label>
         <Autocomplete
-          inputProps={{id: this.props.id}}
+          inputProps={{id: this.props.id, className: 'form-control'}}
+          wrapperProps={{className: 'geocode-wrapper' }}
           ref="autocomplete"
           value={this.state.value}
           items={this.state.results}

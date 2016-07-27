@@ -26,6 +26,9 @@ module.exports = {
         test: /\.css$/, 
         loader: ExtractTextPlugin.extract("style-loader", "css-loader")
       }, {
+        test: /\.json$/,
+        loader: 'json'
+      }, {
         test: /\.png$/,
         loader: 'file'
       }, { 
@@ -50,7 +53,7 @@ module.exports = {
   plugins: debug ? [
     new ExtractTextPlugin("site.css"),
     htmlPlugin
-    ] : [
+  ] : [
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.optimize.UglifyJsPlugin({ mangle: true, sourcemap: true }),

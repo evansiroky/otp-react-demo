@@ -1,0 +1,9 @@
+.osm-result {
+  padding: '2px 6px';
+  cursor: 'default';
+}
+
+.osm-result.highlighted {
+  color: 'white';
+  background: 'hsl(200, 50%, 50%)';
+}

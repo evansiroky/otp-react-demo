@@ -14,7 +14,7 @@ export default class Layout extends React.Component {
             <Itineraries />
           </div>
         </div>
-        <div class="col-md-8">
+        <div class="col-md-8 map-column">
           <MapContainer />
         </div>
       </div>

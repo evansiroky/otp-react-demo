@@ -1,9 +1,14 @@
 import React from "react"
 import { Map, TileLayer } from 'react-leaflet'
+import { connect } from "react-redux"
 
 import 'leaflet/dist/leaflet.css'
 import '../../css/MapContainer.css'
 
+
+@connect((store) => {
+  return {}
+})
 export default class MapContainer extends React.Component {
   constructor() {
     super()

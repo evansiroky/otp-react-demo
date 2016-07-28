@@ -1,7 +1,9 @@
 import { combineReducers } from "redux"
 
-import planReducer from "./planReducer"
+import plan from "./planReducer"
+import trip from "./tripReducer"
 
 export default combineReducers({
-  planReducer
+  plan,
+  trip
 })

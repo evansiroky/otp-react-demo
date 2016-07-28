@@ -18,7 +18,9 @@ const renderItem = function(item, isHighlighted) {
 }
 
 @connect((store) => {
-  return {}
+  return {
+    plan: store.plan
+  }
 })
 export default class MapquestNominatimGeocoder extends React.Component {
 
@@ -56,7 +58,8 @@ export default class MapquestNominatimGeocoder extends React.Component {
     this.setState({ value, results: [ item ] })
     this.props.dispatch(selectGeocodeResult({
       source: this.props.id,
-      data: item
+      data: item,
+      plan: this.props.plan
     }))
   }
 

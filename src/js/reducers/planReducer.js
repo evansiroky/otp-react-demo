@@ -1,20 +1,34 @@
 import moment from 'moment-timezone'
 
+import { timeParseFormat, timezone } from '../config.js'
+
+
 var defaultPlan = {
   origin: {},
   destination: {},
   deparr: 'depart',
-  time: moment().tz("America/Los_Angeles")
+  time: moment().tz(timezone).format(timeParseFormat)
 }
 
 export default function reducer(state=defaultPlan, action) {
+
+  let newState = {...state}
+
   switch (action.type) {
-    case 'UPDATE_TRIP_END':
-      console.log('UPDATE_TRIP_END', state, action)
+    case 'UPDATE_DESTINATION':
+      newState.destination = action.payload
+      break
+    case 'UPDATE_ORIGIN':
+      newState.origin = action.payload
       break
     case 'UPDATE_TIMING':
-      console.log('UPDATE_TIMING', state, action)
+      if(action.payload.deparr) {
+        newState.deparr = action.payload.deparr
+      } else {
+        newState.time = action.payload.time
+      }
       break
   }
-  return state
+
+  return newState
 }

@@ -1,9 +1,10 @@
 const defaultTrip = {
-  trip: {},
+  otpResponse: {},
   fetching: false,
   fetched: false,
   error: null
 }
+
 
 export default function reducer(state=defaultTrip, action) {
 
@@ -11,10 +12,12 @@ export default function reducer(state=defaultTrip, action) {
 
   switch (action.type) {
     case 'TRIP_UNPLANNABLE':
-      newState.trip = {}
+      newState.otpResponse = {}
+      newState.fetched = false
       break
     case 'TRIP_PLANNABLE_PENDING':
       newState.fetching = true
+      newState.fetched = false
       break
     case 'TRIP_PLANNABLE_REJECTED':
       newState.fetching = false
@@ -23,7 +26,7 @@ export default function reducer(state=defaultTrip, action) {
     case 'TRIP_PLANNABLE_FULFILLED':
       newState.fetching = false
       newState.fetched = true
-      newState.trip = action.payload
+      newState.otpResponse = action.payload
       break
   }
 

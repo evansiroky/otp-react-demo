@@ -1,0 +1,13 @@
+.section {
+  color: black;
+}
+
+.section h2{
+  color: #fff;
+  margin: 0;
+  padding: 0.25em 0.5em;
+}
+
+.content {
+  padding: 10px;
+}

@@ -29,8 +29,8 @@ module.exports = {
         test: /\.json$/,
         loader: 'json'
       }, {
-        test: /\.png$/,
-        loader: 'file'
+        test: /\.(png|gif)$/,
+        loader: 'file?name=[path][name].[hash].[ext]'
       }, { 
         test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, 
         loader: "file" 

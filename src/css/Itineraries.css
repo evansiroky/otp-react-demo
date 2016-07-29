@@ -1,0 +1,203 @@
+.trip-fetching img {
+  float: left;
+  margin-right: 1em;
+  height: 20px;
+}
+
+.itinerary {
+  margin-bottom: 0.5em;
+}
+
+.itinerary-icon-summary {
+  overflow: auto;
+}
+
+.itinerary-timing-summary {
+  margin: 0.5em 0 0;
+}
+
+.itinerary-summary-leg {
+  float: left;
+}
+
+.leg-title {
+  margin: 0 5px;
+}
+
+.itinerary-collapse-control, .leg-collapse-control {
+  text-align: center;
+  margin: 0;
+}
+
+.active-itinerary, .active-leg {
+  padding: 10px 5px 0 5px;
+}
+
+.active-itinerary .itinerary-collapse-control, .active-leg .leg-collapse-control {
+  border-top: 1px dashed gray;
+}
+
+.non-transit-step-description{
+  margin-left: 0.5em;
+}
+
+/******************************************************************
+  The following is copied from https://github.com/conveyal/otp.js
+******************************************************************/
+
+.otp-legStep-icon {
+    margin: 3px 8px 3px 4px;
+    width: 20px;
+    height: 20px;
+    float: left;
+}
+
+.otp-legStepLabel-icon {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    vertical-align:middle;
+    background-size: 100%;
+}
+
+.otp-legStep-icon-LEFT {
+    background-image: url('../assets/directions/left.png')
+}
+
+.otp-legStep-icon-RIGHT {
+    background-image: url('../assets/directions/right.png')
+}
+
+.otp-legStep-icon-HARD_LEFT {
+    background-image: url('../assets/directions/hard_left.png')
+}
+
+.otp-legStep-icon-HARD_RIGHT {
+    background-image: url('../assets/directions/hard_right.png')
+}
+
+.otp-legStep-icon-SLIGHTLY_LEFT {
+    background-image: url('../assets/directions/slightly_left.png')
+}
+
+.otp-legStep-icon-SLIGHTLY_RIGHT {
+    background-image: url('../assets/directions/slightly_right.png')
+}
+
+.otp-legStep-icon-TURN_LEFT {
+    background-image: url('../assets/directions/turn_left.png')
+}
+
+.otp-legStep-icon-TURN_RIGHT {
+    background-image: url('../assets/directions/turn_right.png')
+}
+
+.otp-legStep-icon-EXIT_LEFT {
+    background-image: url('../assets/directions/exit_left.png')
+}
+
+.otp-legStep-icon-EXIT_RIGHT {
+    background-image: url('../assets/directions/exit_right.png')
+}
+
+.otp-legStep-icon-UTURN_LEFT {
+    background-image: url('../assets/directions/uturn_left.png')
+}
+
+.otp-legStep-icon-UTURN_RIGHT {
+    background-image: url('../assets/directions/uturn_right.png')
+}
+
+.otp-legStep-icon-CONTINUE {
+    background-image: url('../assets/directions/continue.png')
+}
+
+.otp-legStep-icon-MERGE {
+    background-image: url('../assets/directions/merge.png')
+}
+
+.otp-legStep-icon-ELEVATOR {
+    background-image: url('../assets/directions/elevator.png')
+}
+
+.otp-legStep-icon-CIRCLE_CLOCKWISE {
+    background-image: url('../assets/directions/circle_clockwise.png')
+}
+
+.otp-legStep-icon-CIRCLE_COUNTERCLOCKWISE {
+    background-image: url('../assets/directions/circle_counterclockwise.png')
+}
+
+
+.otp-legMode-icon {
+  background: url('../assets/mode/modes_hires.png') no-repeat;
+  background-size: 200px 20px;
+  display: inline-block;
+  vertical-align:middle;
+}
+
+.otp-legMode-icon-WALK {
+  background-position: 0px 0;
+  width: 15px;
+  height: 20px;
+}
+
+.otp-legMode-icon-BICYCLE {
+  background-position: -15px 0;
+  width: 23px;
+  height: 20px;
+}
+
+.otp-legMode-icon-BUS {
+  background-position: -39px 0;
+  width: 19px;
+  height: 20px;
+}
+
+.otp-legMode-icon-RAIL {
+  background-position: -60px 0;
+  width: 17px;
+  height: 20px;
+}
+
+.otp-legMode-icon-TRAM {
+  background-position: -60px 0;
+  width: 17px;
+  height: 20px;
+}
+
+.otp-legMode-icon-SUBWAY {
+  background-position: -77px 0;
+  width: 19px;
+  height: 20px;
+}
+
+.otp-legMode-icon-FERRY {
+  background-position: -97px 0;
+  width: 21px;
+  height: 20px;
+}
+
+.otp-legMode-icon-GONDOLA {
+  background-position: -119px 0;
+  width: 19px;
+  height: 20px;
+}
+
+.otp-legMode-icon-CAR {
+  background-position: -139px 0;
+  width: 19px;
+  height: 20px;
+}
+
+.otp-legMode-icon-arrow-left {
+  background-position: -162px 0px;
+  width: 10px;
+  height: 16px;
+}
+
+.otp-legMode-icon-arrow-right {
+  background-position: -176px 0px;
+  width: 10px;
+  height: 20px;
+}

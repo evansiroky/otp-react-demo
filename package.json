@@ -24,7 +24,6 @@
     "leaflet": "^0.7.7",
     "moment": "^2.14.1",
     "moment-timezone": "^0.5.5",
-    "query-string": "^4.2.2",
     "react": "^0.14.6",
     "react-autocomplete": "^1.0.1",
     "react-bootstrap-datetimepicker": "0.0.22",

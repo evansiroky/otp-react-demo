@@ -1,36 +1,46 @@
 import axios from 'axios'
 import moment from 'moment-timezone'
-import querystring from 'query-string'
 
 import { otpUrl, timeParseFormat, timezone } from '../config'
+import { deactivateItinerary } from './itineraryActions'
 
 
 export function planTripMaybe(query) {
-  console.log(query)
-  if(query.origin.lat && query.destination.lat) {
-    // trip can be planned
+  return function (dispatch) {
+    if(query.origin.lat && query.destination.lat) {
+      // trip can be planned
+      dispatch(deactivateItinerary())
+      dispatch(tripPlannable(query))
+    } else {
+      // not enough info to plan trip
+      dispatch(tripUnplannable(query))
+    }
+  }
+}
 
-    // assemble url to query
-    const dt = moment.tz(query.time, timeParseFormat, timezone)
-    const params = {
-      date: dt.format('YYYY-MM-DD'),
-      fromPlace: `${query.origin.lat},${query.origin.lon}`,
-      maxTransfers: 3,
-      routerId: 'default',
-      time: dt.format('h:mm A'),
-      toPlace: `${query.destination.lat},${query.destination.lon}`
-    }
+export function tripPlannable(query) {
+  // assemble url to query
+  const dt = moment.tz(query.time, timeParseFormat, timezone)
+  const params = {
+    date: dt.format('YYYY-MM-DD'),
+    fromPlace: `${query.origin.lat},${query.origin.lon}`,
+    maxTransfers: 3,
+    numItineraries: 3,
+    routerId: 'default',
+    time: dt.format('h:mm A'),
+    toPlace: `${query.destination.lat},${query.destination.lon}`
+  }
 
-    return {
-      type: 'TRIP_PLANNABLE',
-      payload: axios.get(otpUrl + 'otp/routers/default/plan?' + querystring.stringify(params))
-    }
-  } else {
-    // not enough info to plan trip
-    return {
-      type: 'TRIP_UNPLANNABLE',
-      payload: query
-    }
+  return {
+    type: 'TRIP_PLANNABLE',
+    payload: axios.get(otpUrl + '/routers/default/plan', { params })
+  }
+}
+
+export function tripUnplannable(query) {
+  return {
+    type: 'TRIP_UNPLANNABLE',
+    payload: query
   }
 }
 

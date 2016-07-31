@@ -87,7 +87,7 @@ export default class Itinerary extends React.Component {
                   }
                   <span class={'otp-legMode-icon otp-legMode-icon-' + leg.mode} />
                   {leg.transitLeg &&
-                    <span class='leg-route-name'>{leg.routeShortName || leg.routeLongName}</span>
+                    <span class='leg-title'>{leg.routeShortName || leg.routeLongName}</span>
                   }
                 </div>
               })
@@ -161,8 +161,8 @@ export default class Itinerary extends React.Component {
                             <span class='non-transit-step-description'>
                               {`${relSlugs[step.relativeDirection]} on ${step.streetName}`}
                               {stepIdx === 0 && 
-                                ` heading ${absSlugs[leg.absoluteDirection]}`}
-                              {` for ${prettyDistance(leg.distance)}`}
+                                ` heading ${absSlugs[step.absoluteDirection]}`}
+                              {` for ${prettyDistance(step.distance)}`}
                             </span>
                           </p>
                         </div>

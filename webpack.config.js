@@ -1,4 +1,5 @@
 var debug = process.env.NODE_ENV !== "production"
+var CopyWebpackPlugin = require('copy-webpack-plugin')
 var ExtractTextPlugin = require("extract-text-webpack-plugin")
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 var webpack = require('webpack')
@@ -7,6 +8,11 @@ var path = require('path')
 var htmlPlugin = new HtmlWebpackPlugin({
   template: 'index.html'
 })
+
+var cwp = new CopyWebpackPlugin([
+    { from: './assets', to: './assets'}
+  ]
+)
 
 module.exports = {
   context: path.join(__dirname, "src"),
@@ -30,7 +36,7 @@ module.exports = {
         loader: 'json'
       }, {
         test: /\.(png|gif)$/,
-        loader: 'file?name=[path][name].[hash].[ext]'
+        loader: 'file?name=[path][name].[ext]'
       }, { 
         test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, 
         loader: "file" 
@@ -52,12 +58,14 @@ module.exports = {
   },
   plugins: debug ? [
     new ExtractTextPlugin("site.css"),
-    htmlPlugin
+    htmlPlugin,
+    cwp
   ] : [
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.optimize.UglifyJsPlugin({ mangle: true, sourcemap: true }),
     new ExtractTextPlugin("site.css"),
-    htmlPlugin
+    htmlPlugin,
+    cwp
   ]
 }

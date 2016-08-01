@@ -70,7 +70,6 @@ export default class Itinerary extends React.Component {
   }
 
   render() {
-    console.log(this)
     const isActiveItinerary = this.props.idx === this.props.activeItinerary.idx
     return (
       <div class='panel panel-default itinerary' key={'itinerary-' + this.props.idx} >
@@ -96,7 +95,10 @@ export default class Itinerary extends React.Component {
           <p class='itinerary-timing-summary'>
             { `${parseTime(this.props.data.startTime)} - 
             ${parseTime(this.props.data.endTime)} 
-            (${moment.duration(this.props.data.duration, 'seconds').humanize()})`  }
+            (
+            ${this.props.data.duration >= 2700 && 'about ' }
+            ${moment.duration(this.props.data.duration, 'seconds').humanize()}
+            )`  }
           </p>
         </div>
         {!isActiveItinerary &&

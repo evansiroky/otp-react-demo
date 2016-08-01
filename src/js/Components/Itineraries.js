@@ -14,7 +14,6 @@ import '../../css/Itineraries.css'
 })
 export default class Itineraries extends React.Component {
   render() {
-    console.log(this.props.trip)
     const itineraries = this.props.trip.fetched ? this.props.trip.otpResponse.data.plan.itineraries : []
     return (
       <div class="bg-primary section">
@@ -40,7 +39,10 @@ export default class Itineraries extends React.Component {
           {this.props.trip.error &&
             // an error occurred while fetching trip
             <div class="alert alert-danger">
-              An error occurred while trying to plan the trip.
+              <p>An error occurred while trying to plan the trip</p>
+              {this.props.trip.otpErrorMsg &&
+                <p>{this.props.trip.error}</p>
+              }
             </div>
           }
 

@@ -5,6 +5,7 @@ const defaultTrip = {
   otpResponse: {},
   fetching: false,
   fetched: false,
+  otpErrorMsg: false,
   error: null
 }
 
@@ -31,6 +32,7 @@ export default function reducer(state=defaultTrip, action) {
       newState.fetching = true
       newState.fetched = false
       newState.error = null
+      newState.otpErrorMsg = false
       break
     case 'TRIP_PLANNABLE_REJECTED':
       newState.fetching = false
@@ -38,8 +40,9 @@ export default function reducer(state=defaultTrip, action) {
       break
     case 'TRIP_PLANNABLE_FULFILLED':
       newState.fetching = false
-      if(action.payload.error) {
-        newState.error = action.payload.error.msg
+      if(action.payload.data.error) {
+        newState.error = action.payload.data.error.msg
+        newState.otpErrorMsg = true
       } else {
         newState.error = null
         newState.fetched = true

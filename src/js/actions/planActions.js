@@ -22,6 +22,7 @@ export function tripPlannable(query) {
   // assemble url to query
   const dt = moment.tz(query.time, timeParseFormat, timezone)
   const params = {
+    arriveBy: query.deparr === 'arr',
     date: dt.format('YYYY-MM-DD'),
     fromPlace: `${query.origin.lat},${query.origin.lon}`,
     maxTransfers: 3,

@@ -7,6 +7,7 @@ import 'leaflet/dist/leaflet.css'
 import '../../css/MapContainer.css'
 
 import { defaultMapBounds } from '../config'
+import AlternateRoute from './AlternateRoute'
 
 
 function getLatLng(tripEnd) {
@@ -146,26 +147,22 @@ export default class MapContainer extends React.Component {
             this.props.activeItinerary.idx == -1 && 
             this.props.trip.otpResponse.data.plan.itineraries.length > 1 && 
             // Itinerary is not selected, show polylines of other options
-            <LayerGroup>
-              {altPoints.map((combinedAltPoint) => {
-                return <Polyline opacity={1}
-                  positions={combinedAltPoint} color={'grey'} />
-              })}
-            </LayerGroup>
+            altPoints.map((combinedAltPoint, idx) => {
+              return <AlternateRoute key={`alt-route-${idx}`}
+                positions={combinedAltPoint} />
+            })
           }
           {displayItinerary &&
             // Display active itinerary details
-            <LayerGroup>
-              {displayItinerary.legs.map((leg) => {
-                return <LayerGroup>
-                  <Marker position={getLatLng(leg.from)} icon={modeMarkers[leg.mode]} />
-                  <Polyline opacity={1}
-                    positions={leg.points} 
-                    color={'blue'}
-                    dashArray={leg.transitLeg ? null : '10,10'} />
-                </LayerGroup>
-              })}
-            </LayerGroup>
+            displayItinerary.legs.map((leg, legIdx) => {
+              return <LayerGroup key={`display-route-layer-leg-${legIdx}`}>
+                <Marker position={getLatLng(leg.from)} icon={modeMarkers[leg.mode]} />
+                <Polyline opacity={1}
+                  positions={leg.points} 
+                  color={'blue'}
+                  dashArray={leg.transitLeg ? null : '10,10'} />
+              </LayerGroup>
+            })
           }
         </Map>
       </div>

@@ -52,10 +52,12 @@ export function selectGeocodeResult(data) {
     let tripEndType = ''
 
     if(data.source === 'from') {
-      query.origin = data.data
+      query.origin.lat = data.data.geometry.coordinates[1]
+      query.origin.lon = data.data.geometry.coordinates[0]
       tripEndType = 'UPDATE_ORIGIN'
     } else {
-      query.destination = data.data
+      query.destination.lat = data.data.geometry.coordinates[1]
+      query.destination.lon = data.data.geometry.coordinates[0]
       tripEndType = 'UPDATE_DESTINATION'
     } 
 

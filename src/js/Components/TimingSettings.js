@@ -23,7 +23,6 @@ export default class TimingSettings extends React.Component {
       deparr: 'dep',
       time: moment().tz(timezone).format(timeParseFormat)
     }
-    console.log(this.state)
   }
 
   handleDateTimeChange(newDate) {
@@ -59,6 +58,7 @@ export default class TimingSettings extends React.Component {
           <DateTimeField 
             dateTime={this.state.time}
             format={timeParseFormat}
+            inputProps={{className: 'form-control datetime-picker-input'}}
             minDate={moment().subtract(1, 'hours')}
             onChange={this.handleDateTimeChange.bind(this)} 
           />

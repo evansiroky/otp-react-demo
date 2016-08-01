@@ -6,6 +6,8 @@ import { connect } from "react-redux"
 import 'leaflet/dist/leaflet.css'
 import '../../css/MapContainer.css'
 
+import { defaultMapBounds } from '../config'
+
 
 function getLatLng(tripEnd) {
   return [parseFloat(tripEnd.lat), parseFloat(tripEnd.lon)]
@@ -62,7 +64,7 @@ export default class MapContainer extends React.Component {
   }
 
   render() {
-    let bounds = [[45.28, -123.18], [45.66, -122.3]]
+    let bounds = defaultMapBounds
     let displayItinerary = null
     let altPoints = []
 

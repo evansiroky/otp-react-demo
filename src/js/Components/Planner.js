@@ -1,6 +1,6 @@
 import React from "react"
 
-import MapquestNominatimGeocoder from './MapquestNominatimGeocoder'
+import Geocoder from './Geocoder'
 import TimingSettings from './TimingSettings.js'
 
 
@@ -10,8 +10,8 @@ export default class Planner extends React.Component {
       <div class="bg-primary section">
         <h2>Plan</h2>
         <div class="bg-info content">
-          <MapquestNominatimGeocoder id='from' labelText='From' />
-          <MapquestNominatimGeocoder id='to' labelText='To' />
+          <Geocoder id={'from'} placeholder={'From'} />
+          <Geocoder id={'to'} placeholder={'To'} />
           <TimingSettings />
         </div>
       </div>

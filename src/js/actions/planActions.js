@@ -5,6 +5,11 @@ import { otpUrl, timeParseFormat, timezone } from '../config'
 import { deactivateItinerary } from './itineraryActions'
 
 
+function clone(obj) {
+  return JSON.parse(JSON.stringify(obj))
+}
+
+
 export function planTripMaybe(query) {
   return function (dispatch) {
     if(query.origin.lat && query.destination.lat) {
@@ -53,18 +58,53 @@ export function selectGeocodeResult(data) {
     let tripEndType = ''
 
     if(data.source === 'from') {
-      query.origin.lat = data.data.geometry.coordinates[1]
-      query.origin.lon = data.data.geometry.coordinates[0]
+      if(data.data) {
+        query.origin.lat = data.data.geometry.coordinates[1]
+        query.origin.lon = data.data.geometry.coordinates[0]
+      } else {
+        query.origin.lat = null
+      }
       tripEndType = 'UPDATE_ORIGIN'
     } else {
-      query.destination.lat = data.data.geometry.coordinates[1]
-      query.destination.lon = data.data.geometry.coordinates[0]
+      if(data.data) {
+        query.destination.lat = data.data.geometry.coordinates[1]
+        query.destination.lon = data.data.geometry.coordinates[0]
+      } else {
+        query.destination.lat = null
+      }
       tripEndType = 'UPDATE_DESTINATION'
     } 
 
     dispatch({
       type: tripEndType,
-      payload: data.data
+      payload: {
+        lat: data.data.geometry.coordinates[1],
+        lon: data.data.geometry.coordinates[0],
+        label: data.data.properties.label
+      }
+    })
+
+    dispatch(planTripMaybe(query))
+  }
+}
+
+export function switchGeocoderInput(data) {
+  return function (dispatch) {
+
+    const query = clone(data.plan)
+    const oldDestination = clone(query.destination)
+    const oldOrigin = clone(query.origin)
+    query.destination = query.origin
+    query.origin = oldDestination
+
+    dispatch({
+      type: 'UPDATE_DESTINATION',
+      payload: oldOrigin
+    })
+
+    dispatch({
+      type: 'UPDATE_ORIGIN',
+      payload: oldDestination
     })
 
     dispatch(planTripMaybe(query))

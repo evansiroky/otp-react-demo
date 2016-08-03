@@ -8,6 +8,24 @@
   margin-bottom: 0.5em;
 }
 
+.itinerary-summary-container {
+  overflow: auto;
+}
+
+.itinerary-summary {
+  float: left;
+  width: 90%;
+}
+
+.itinerary-summary-toggler {
+  width: 10%;
+  float: right;
+}
+
+.summary-toggle-icon {
+  float: right;
+}
+
 .itinerary-icon-summary {
   overflow: auto;
 }
@@ -24,16 +42,16 @@
   margin: 0 5px;
 }
 
-.itinerary-collapse-control, .leg-collapse-control {
+.itinerary-collapse-control {
   text-align: center;
   margin: 0;
 }
 
-.active-itinerary, .active-leg {
+.active-body {
   padding: 10px 5px 0 5px;
 }
 
-.active-itinerary .itinerary-collapse-control, .active-leg .leg-collapse-control {
+.active-body .itinerary-collapse-control {
   border-top: 1px dashed gray;
 }
 

@@ -16,12 +16,18 @@ export default function reducer(state=defaultPlan, action) {
 
   switch (action.type) {
     case 'UPDATE_DESTINATION':
-      newState.destination.lat = action.payload.geometry.coordinates[1]
-      newState.destination.lon = action.payload.geometry.coordinates[0]
+      if(action.payload) {
+        newState.destination = action.payload
+      } else {
+        newState.destination = {}
+      }
       break
     case 'UPDATE_ORIGIN':
-      newState.origin.lat = action.payload.geometry.coordinates[1]
-      newState.origin.lon = action.payload.geometry.coordinates[0]
+      if(action.payload) {
+        newState.origin = action.payload
+      } else {
+        newState.origin = {}
+      }
       break
     case 'UPDATE_TIMING':
       if(action.payload.deparr) {

@@ -53,97 +53,104 @@ function prettyDistance(d) {
 })
 export default class Itinerary extends React.Component {
 
-  handleCollapseItineraryDetails() {
-    this.props.dispatch(deactivateItinerary())
+  handleItineraryToggle() {
+    if(this.isActiveItinerary()) {
+      this.props.dispatch(deactivateItinerary())
+    } else {
+      this.props.dispatch(activateItinerary({ idx: this.props.idx, data: this.props.data }))
+    }
   }
 
-  handleCollapseLegDetails(legIdx) {
-    this.props.dispatch(deactivateLeg(legIdx))
+  handleLegToggle(legIdx) {
+    if(this.isActiveLeg(legIdx)) {
+      this.props.dispatch(deactivateLeg(legIdx))
+    } else {
+      this.props.dispatch(activateLeg(legIdx))
+    }
   }
 
-  handleViewItineraryDetails() {
-    this.props.dispatch(activateItinerary({ idx: this.props.idx, data: this.props.data }))
+  isActiveItinerary() {
+    return this.props.idx === this.props.activeItinerary.idx
   }
 
-  handleViewLegDetails(legIdx) {
-    this.props.dispatch(activateLeg(legIdx))
+  isActiveLeg(legIdx) {
+    return this.props.activeItinerary.activeLegs.indexOf(legIdx) > -1
   }
 
   render() {
-    const isActiveItinerary = this.props.idx === this.props.activeItinerary.idx
+    const isActiveItinerary = this.isActiveItinerary()
     return (
       <div class='panel panel-default itinerary' key={'itinerary-' + this.props.idx} >
-        <div class='panel-heading'>
-          <div class='itinerary-icon-summary'>
-            {
-              // summary
-              this.props.data.legs.map((leg, idx) => {
-                return <div 
-                    class='itinerary-summary-leg' 
-                    key={`itinerary-summary-${this.props.idx}-leg-${idx}`} >
-                  {idx > 0 && 
-                    <span> > </span>
-                  }
-                  <span class={'otp-legMode-icon otp-legMode-icon-' + leg.mode} />
-                  {leg.transitLeg &&
-                    <span class='leg-title'>{leg.routeShortName || leg.routeLongName}</span>
-                  }
-                </div>
-              })
-            }
-          </div>
-          <p class='itinerary-timing-summary'>
-            { `${parseTime(this.props.data.startTime)} - 
-            ${parseTime(this.props.data.endTime)} 
-            (
-            ${this.props.data.duration >= 2700 && 'about ' }
-            ${moment.duration(this.props.data.duration, 'seconds').humanize()}
-            )`  }
-          </p>
-        </div>
-        {!isActiveItinerary &&
-          <div>
-            <p class='itinerary-collapse-control'>
-              <a onClick={this.handleViewItineraryDetails.bind(this)} >View Details</a>
+        <div class='panel-heading itinerary-summary-container' 
+              onClick={this.handleItineraryToggle.bind(this)}>
+          <div class='itinerary-summary'>
+            <div class='itinerary-icon-summary'>
+              {
+                // summary
+                this.props.data.legs.map((leg, idx) => {
+                  return <div 
+                      class='itinerary-summary-leg' 
+                      key={`itinerary-summary-${this.props.idx}-leg-${idx}`} >
+                    {idx > 0 && 
+                      <span> > </span>
+                    }
+                    <span class={'otp-legMode-icon otp-legMode-icon-' + leg.mode} />
+                    {leg.transitLeg &&
+                      <span class='leg-title'>{leg.routeShortName || leg.routeLongName}</span>
+                    }
+                  </div>
+                })
+              }
+            </div>
+            <p class='itinerary-timing-summary'>
+              { `${parseTime(this.props.data.startTime)} - 
+                ${parseTime(this.props.data.endTime)} 
+                (${(this.props.data.duration >= 2700 ? 'about ' : '' ) + 
+                  moment.duration(this.props.data.duration, 'seconds').humanize()})` }
             </p>
           </div>
-        }
+          <div class='itinerary-summary-toggler'>
+            <span class={ `summary-toggle-icon glyphicon 
+                glyphicon-triangle-${isActiveItinerary ? 'bottom' : 'left'}` }
+              aria-hidden="true" />
+          </div>
+        </div>
         {isActiveItinerary &&
-          <div class='active-itinerary'>
+          <div class='active-body'>
             {this.props.data.legs.map((leg, legIdx) => {
               
-              const legIsActive = this.props.activeItinerary.activeLegs.indexOf(legIdx) > -1
-              console.log(leg)
+              const legIsActive = this.isActiveLeg(legIdx)
 
               return <div class='panel panel-default' key={`itinerary-leg-detail-${legIdx}`} >
-                <div class='panel-heading itinerary-leg-detail' >
-                  <span class={'otp-legMode-icon otp-legMode-icon-' + leg.mode} />
-                  {leg.transitLeg &&
-                    <span class='leg-title'>
-                      {(leg.routeShortName && leg.routeLongName) &&
-                       `${leg.routeShortName} - ${leg.routeLongName}`}
-                      {(leg.routeShortName && !leg.routeLongName) &&
-                        leg.routeShortName}
-                      {(!leg.routeShortName && leg.routeLongName) &&
-                        leg.routeLongName}
-                      {leg.headsign && ` to ${leg.headsign}`}
-                    </span>
-                  }
-                  {!leg.transitLeg &&
-                    <span class='leg-title'>
-                      {`${leg.mode} ${prettyDistance(leg.distance)} to ${leg.to.name}`}
-                    </span>
-                  }
-                </div>
-                {!legIsActive && 
-                  <div>
-                    <p class='leg-collapse-control'>
-                      <a onClick={this.handleViewLegDetails.bind(this, legIdx)} >View Details</a>
-                    </p>
+                <div class='panel-heading itinerary-summary-container' 
+                      onClick={this.handleLegToggle.bind(this, legIdx)}>
+                  <div class='itinerary-summary'>
+                    <span class={'otp-legMode-icon otp-legMode-icon-' + leg.mode} />
+                    {leg.transitLeg &&
+                      <span class='leg-title'>
+                        {(leg.routeShortName && leg.routeLongName) &&
+                         `${leg.routeShortName} - ${leg.routeLongName}`}
+                        {(leg.routeShortName && !leg.routeLongName) &&
+                          leg.routeShortName}
+                        {(!leg.routeShortName && leg.routeLongName) &&
+                          leg.routeLongName}
+                        {leg.headsign && ` to ${leg.headsign}`}
+                      </span>
+                    }
+                    {!leg.transitLeg &&
+                      <span class='leg-title'>
+                        {`${leg.mode} ${prettyDistance(leg.distance)} to ${leg.to.name}`}
+                      </span>
+                    }
                   </div>
-                }
+                  <div class='itinerary-summary-toggler'>
+                    <span class={ `summary-toggle-icon glyphicon 
+                        glyphicon-triangle-${legIsActive ? 'bottom' : 'left'}` }
+                      aria-hidden="true" />
+                  </div>
+                </div>
                 {legIsActive && 
-                  <div class='active-leg'>
+                  <div class='active-body'>
                     {leg.transitLeg &&
                       <div>
                         <p>{`${parseTime(leg.startTime)} @ ${leg.from.name}`}</p>
@@ -152,8 +159,6 @@ export default class Itinerary extends React.Component {
                     }
                     {!leg.transitLeg &&
                       leg.steps.map((step, stepIdx) => {
-                        console.log(step)
-                        console.log(absSlugs)
                         return <div key={`itinerary-leg-detail-${legIdx}-step-${stepIdx}`}>
                           <p>
                             <span class={`otp-legStepLabel-icon 
@@ -170,15 +175,16 @@ export default class Itinerary extends React.Component {
                         </div>
                       })
                     }
-                    <p class='leg-collapse-control'>
-                      <a onClick={this.handleCollapseLegDetails.bind(this, legIdx)} >Collapse</a>
+                    <p class='itinerary-collapse-control' 
+                        onClick={this.handleLegToggle.bind(this, legIdx)} >
+                      <span class='glyphicon glyphicon-triangle-top' aria-hidden="true" />
                     </p>
                   </div>   
                 }
               </div>
             })}
-            <p class='itinerary-collapse-control'>
-              <a onClick={this.handleCollapseItineraryDetails.bind(this)} >Collapse</a>
+            <p class='itinerary-collapse-control' onClick={this.handleItineraryToggle.bind(this)} >
+              <span class='glyphicon glyphicon-triangle-top' aria-hidden="true" />
             </p>
           </div>
         }
